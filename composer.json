@@ -1,0 +1,9 @@
+{
+    "require": {
+        "symfony/orm-pack": "^2.2",
+        "ext-dom": "20031129"
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.45"
+    }
+}
