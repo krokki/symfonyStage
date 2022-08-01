@@ -1,3 +1,7 @@
 home:
   path: /home
   controller: App\Controller\HomeController::index
+
+insert:
+  path: /insert
+  controller: App\Controller\HomeController::createPhoneManufacturer
