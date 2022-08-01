@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Phone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Doctrine\ORM\EntityManagerInterface;
 /**
  * @extends ServiceEntityRepository<Phone>
  *
@@ -39,6 +39,17 @@ class PhoneRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOnePhone(Phone $entity, EntityManagerInterface $entityManager, int $phone_id)
+    {
+        $this->
+
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.id = :id')
+            ->setParameter('id ', $phoneId);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
 //    /**
 //     * @return Phone[] Returns an array of Phone objects
 //     */

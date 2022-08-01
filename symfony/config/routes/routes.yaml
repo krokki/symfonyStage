@@ -5,3 +5,7 @@ home:
 insert:
   path: /insert
   controller: App\Controller\HomeController::createPhoneManufacturer
+
+showData:
+  path: /onePhone
+  controller: App\Controller\HomeController::getOnePhoneInfo
