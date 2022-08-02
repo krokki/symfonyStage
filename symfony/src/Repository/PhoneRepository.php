@@ -39,17 +39,21 @@ class PhoneRepository extends ServiceEntityRepository
         }
     }
 
-    public function findOnePhone(Phone $entity, EntityManagerInterface $entityManager, int $phone_id)
+    /** @noinspection PhpUnhandledExceptionInspection */
+    public function findPhoneById(int $phoneId): ?Phone
     {
-        $this->
+        $qb = $this->createQueryBuilder('p');
 
-        $qb = $this->createQueryBuilder('p')
-            ->where('p.id = :id')
-            ->setParameter('id ', $phoneId);
-
-        $query = $qb->getQuery();
-        return $query->execute();
+        return $qb
+            ->select('p, m')
+            ->join('p.manufacturer', 'm')
+            ->where('p.id = :phoneId')
+            ->setParameter('phoneId', $phoneId)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
+
+
 //    /**
 //     * @return Phone[] Returns an array of Phone objects
 //     */

@@ -20,7 +20,7 @@ class HomeController extends AbstractController
         return  $this->render(view: 'home/home.html.twig', parameters: $params);
     }
 
-    public function createPhoneManufacturer(EntityManagerInterface $entityManager): Response
+    public function createPhoneManufacturer (EntityManagerInterface $entityManager): Response
     {
         $manufacturer = new Manufacturer();
         $manufacturer->setCountry('Russia');
@@ -40,10 +40,12 @@ class HomeController extends AbstractController
     }
 
 
-    public function getOnePhoneInfo(EntityManagerInterface $entityManager){
+    public function getOnePhoneInfo (EntityManagerInterface $entityManager): Response
+    {
         $phoneId = 2;
         $repository = $entityManager->getRepository(Phone::class);
-        $product = $repository->findOnePhone($phoneId);
-        dd($product);
+        $phoneData = $repository->findPhoneById($phoneId);
+        dd($phoneData);
+        return $this->render(view: 'home/phoneData.html.twig', parameters: $phoneData);
     }
 }
