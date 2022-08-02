@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Controller;
 use \App\Entity\Phone;
 use \App\Entity\Manufacturer;
+use App\Service\Phone\PhoneService;
 
 class HomeController extends AbstractController
 {
@@ -40,12 +41,13 @@ class HomeController extends AbstractController
     }
 
 
-    public function getOnePhoneInfo (EntityManagerInterface $entityManager): Response
+    public function getOnePhoneInfo (PhoneService $phoneService): Response
     {
-        $phoneId = 2;
-        $repository = $entityManager->getRepository(Phone::class);
-        $phoneData = $repository->findPhoneById($phoneId);
-        dd($phoneData);
+        $idManufacturer = 3;
+        $phoneSpecs = ['model' => 'Xiaomi', 'ram' => 1024];
+        $result = $phoneService->addPhone($idManufacturer, $phoneSpecs);
+
+
         return $this->render(view: 'home/phoneData.html.twig', parameters: $phoneData);
     }
 }
