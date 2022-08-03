@@ -4,7 +4,9 @@ namespace App\Service\Phone;
 
 use App\Entity\Manufacturer;
 use App\Entity\Phone;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use ErrorException;
 
 class PhoneService
 {
@@ -18,11 +20,16 @@ class PhoneService
         $this->em = $em;
     }
 
-    public function addPhone(int $idManufacturer, array $phoneSpecs): void
+    /** @noinspection PhpUndefinedVariableInspection */
+    public function addPhone(Manufacturer $manufacturer, array $phoneSpecs): Phone
     {
-        $repository = $this->em->getRepository(Manufacturer::class);
-        $manufacturerExist = $repository->find($idManufacturer);
+        $phone = new Phone();
+        $phone->setModel($phoneSpecs['model']);
+        $phone->setRam($phoneSpecs['ram']);
+        $phone->setManufacturer($manufacturer);
+        $this->em->persist($phone);
+        $this->em->flush();
 
-        dd($manufacturerExist);
+        return $phone;
     }
 }
