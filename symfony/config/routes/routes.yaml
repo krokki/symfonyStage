@@ -9,3 +9,7 @@ insert:
 addPhone:
   path: /v1/manufacturers/{id}/phones
   controller: App\Controller\V1\HomeController::addOnePhone
+
+practiceAlg:
+  path: /practiceAlg
+  controller: App\Controller\V1\HomeController::practiceAlg
