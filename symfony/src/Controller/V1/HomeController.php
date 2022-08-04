@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use function App\Controller\dd;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class HomeController extends AbstractController
 {
@@ -50,17 +50,10 @@ class HomeController extends AbstractController
     }
 
 
-    public function  addOnePhone(int $id, Request $request, EntityManagerInterface $em, PhoneService $phoneService): void
+
+    public function  addOnePhone(Manufacturer $manufacturer, Request $request, EntityManagerInterface $em, PhoneService $phoneService): void
     {
-
         $phoneSpecs = $request->toArray();
-
-        $manufacturer = $em->getRepository(Manufacturer::class)->find($id);
-
-        if (!$manufacturer) {
-            throw new ErrorException('Производитель с заданным id не существует!');
-        }
-
         $phone = $phoneService->addPhone($manufacturer, $phoneSpecs);
         dd($phone);
 
@@ -84,5 +77,16 @@ class HomeController extends AbstractController
 //        $phone = $phoneService->addPhone($manufacturer, $phoneSpecs);
 //        dd($phone);
 //        return $this->render(view: 'home/phoneData.html.twig', parameters: $result);
+        //home:
+        //  path: /home
+        //  controller: App\Controller\HomeController::index
+        //
+        //insert:
+        //  path: /insert
+        //  controller: App\Controller\HomeController::createPhoneManufacturer
+        //
+        //addPhone:
+        //  path: /V1/manufacturers/{id}/phones
+        //  controller: App\Controller\V1\HomeController::addOnePhone
 //    }
 }
