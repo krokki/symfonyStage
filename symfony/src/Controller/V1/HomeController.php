@@ -93,10 +93,12 @@ class HomeController extends AbstractController
         //        $serializer = new Serializer($normalizers, []);
         //        $arrPhone = $serializer->normalize($phone);
 
+        // $arrPhone = $this->normalizerInterface->normalize($phone, null, ['groups' => ['AllPhoneProperty']]);  //only phones data
+
         $phoneSpecs = $request->toArray();
         $phone = $phoneService->addPhone($manufacturer, $phoneSpecs);
         /** @noinspection PhpUnhandledExceptionInspection */
-        $arrPhone = $this->normalizerInterface->normalize($phone); //object to array
+        $arrPhone = $this->normalizerInterface->normalize($phone, null, ['groups' => ['all_phone_property', 'manufacturer_name']]); //object to array
         return $this->json($arrPhone);
     }
 
