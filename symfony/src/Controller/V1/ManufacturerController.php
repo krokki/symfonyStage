@@ -8,6 +8,7 @@ use App\Service\Phone\PhoneService;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
 use Normalizer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,16 +21,17 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 
-class HomeController extends AbstractController
+class ManufacturerController extends AbstractController
 {
     private NormalizerInterface $normalizerInterface;
-
+    private EntityManagerInterface $em;
     /**
      * @param NormalizerInterface $ni
      */
-    public function __construct(NormalizerInterface $ni)
+    public function __construct(NormalizerInterface $ni, EntityManagerInterface $em)
     {
         $this->normalizerInterface = $ni;
+        $this->em = $em;
     }
 
     public function index(): Response
@@ -58,7 +60,6 @@ class HomeController extends AbstractController
         return new Response('Inserted new model phone with id = '.$phone->getId());
     }
 
-
     public function practiceAlg(): ?Response
     {
             $string = "man in Black   ";
@@ -85,8 +86,7 @@ class HomeController extends AbstractController
             return new Response("");
     }
 
-
-    public function  addOnePhone(Manufacturer $manufacturer, Request $request, EntityManagerInterface $em, PhoneService $phoneService): JsonResponse
+    public function  addOnePhone(Manufacturer $manufacturer, Request $request, PhoneService $phoneService): JsonResponse
     {
         //        Так тоже можно
         //        $normalizers = [new ObjectNormalizer()];
@@ -102,6 +102,29 @@ class HomeController extends AbstractController
         return $this->json($arrPhone);
     }
 
+    public function getManufacturers(): JsonResponse //Список всех производителей в json формате
+    {
+        $listManufacturers = $this->em->getRepository(Manufacturer::class)->findAll();
+        $arrManufacturers = $this->normalizerInterface->normalize($listManufacturers);
+        return $this->json($arrManufacturers);
+    }
+
+    /**
+     * @param Manufacturer $manufacturer
+     * @return JsonResponse
+     * @throws ExceptionInterface
+     */
+    public function getOneManufacturerPhones(Manufacturer $manufacturer): JsonResponse
+    {
+
+        $phones = $this->em->getRepository(Phone::class)->findBy(['manufacturer' => $manufacturer]);
+
+        $arrPhones = $this->normalizerInterface->normalize($phones, null, ['groups' => []]);
+//        dd($arrPhones);
+
+
+        return $this->json($arrPhones);
+    }
 
 //    /**
 //     * @throws ErrorException

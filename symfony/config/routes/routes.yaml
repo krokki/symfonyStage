@@ -1,15 +1,26 @@
 home:
   path: /home
-  controller: App\Controller\HomeController::index
+  controller: App\Controller\ManufacturerController::index
 
 insert:
   path: /insert
-  controller: App\Controller\HomeController::createPhoneManufacturer
+  controller: App\Controller\ManufacturerController::createPhoneManufacturer
 
 addPhone:
   path: /v1/manufacturers/{id}/phones
   controller: App\Controller\V1\HomeController::addOnePhone
+  methods: POST
 
 practiceAlg:
   path: /practiceAlg
-  controller: App\Controller\V1\HomeController::practiceAlg
+  controller: App\Controller\V1\ManufacturerController::practiceAlg
+
+getManufacturers:
+  path: /v1/manufacturers
+  controller: App\Controller\V1\ManufacturerController::getManufacturers
+  methods: GET
+
+getOneManufacturerPhones:
+  path: /v1/manufacturers/{id}/phones
+  controller: App\Controller\V1\ManufacturerController::getOneManufacturerPhones
+  methods: GET
