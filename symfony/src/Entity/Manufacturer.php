@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ManufacturerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ManufacturerRepository::class)]
 class Manufacturer
@@ -14,6 +15,9 @@ class Manufacturer
     private int $id;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups ({"manufacturer_name"})
+     */
     private string $name;
 
     #[ORM\Column(length: 255)]

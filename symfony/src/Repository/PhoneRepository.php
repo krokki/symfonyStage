@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Manufacturer;
 use App\Entity\Phone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,6 +52,17 @@ class PhoneRepository extends ServiceEntityRepository
             ->setParameter('phoneId', $phoneId)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findManufacturerPhones(Manufacturer $manufacturer)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return $qb
+            ->where('p.manufacturer = :manufacturer')
+            ->setParameter('manufacturer', $manufacturer)
+            ->getQuery()
+            ->getResult();
     }
 
 
