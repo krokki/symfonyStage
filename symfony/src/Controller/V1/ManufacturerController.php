@@ -19,6 +19,10 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class ManufacturerController extends AbstractController
@@ -86,7 +90,7 @@ class ManufacturerController extends AbstractController
             return new Response("");
     }
 
-    public function  addOnePhone(Manufacturer $manufacturer, Request $request, PhoneService $phoneService): JsonResponse
+    public function  addOnePhone(Manufacturer $manufacturer, Request $request, PhoneService $phoneService, ValidatorInterface $validator): JsonResponse
     {
         //        Так тоже можно
         //        $normalizers = [new ObjectNormalizer()];
@@ -96,6 +100,26 @@ class ManufacturerController extends AbstractController
         // $arrPhone = $this->normalizerInterface->normalize($phone, null, ['groups' => ['AllPhoneProperty']]);  //only phones data
 
         $phoneSpecs = $request->toArray();
+        //validate array params
+        $constraint =  new Assert\Collection([
+            'model' => [new Assert\NotBlank(), new Assert\Type(['type' => 'string'])],
+            'ram' => [new Assert\NotBlank(), new Assert\Type(['type' => 'int'])]
+            ]);
+
+        $violations = $validator->validate($phoneSpecs, $constraint);
+        if(!empty($violations)) {
+            /** @var ConstraintViolation $violations */
+            for($i = 0; $i < count($violations); $i++)
+            {
+                echo $violations[$i]->getMessage();
+            }
+        }
+
+        //dd($violations);
+        //
+
+
+
         $phone = $phoneService->addPhone($manufacturer, $phoneSpecs);
         /** @noinspection PhpUnhandledExceptionInspection */
         $arrPhone = $this->normalizerInterface->normalize($phone, null, ['groups' => ['all_phone_property', 'manufacturer_name']]); //object to array
@@ -125,7 +149,6 @@ class ManufacturerController extends AbstractController
 
         return $this->json($arrPhones);
     }
-
 //    /**
 //     * @throws ErrorException
 //     */
