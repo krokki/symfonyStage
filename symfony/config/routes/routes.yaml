@@ -24,3 +24,8 @@ getOneManufacturerPhones:
   path: /v1/manufacturers/{id}/phones
   controller: App\Controller\V1\ManufacturerController::getOneManufacturerPhones
   methods: GET
+
+goToAnotherSite:
+  path: /v1/getHttpInfo
+  controller: App\Controller\V1\ManufacturerController::goAwaySite
+  methods: GET

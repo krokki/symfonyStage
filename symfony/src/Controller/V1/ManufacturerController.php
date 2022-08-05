@@ -2,12 +2,12 @@
 
 namespace App\Controller\V1;
 
+use _PHPStan_9a6ded56a\Nette\Utils\Json;
 use App\Entity\Manufacturer;
 use App\Entity\Phone;
 use App\Service\Phone\PhoneService;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
-use Normalizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 
 class ManufacturerController extends AbstractController
@@ -149,7 +150,17 @@ class ManufacturerController extends AbstractController
 
         return $this->json($arrPhones);
     }
-//    /**
+
+    public function goAwaySite(HttpClientInterface $httpClient): JsonResponse
+    {
+        $response = $httpClient->request('GET', 'https://api.ipify.org?format=json');
+        $status = $response->getStatusCode();
+        $content = $response->getContent();
+        $result = $response->toArray();
+        return new JsonResponse($result, $status);
+    }
+
+    //    /**
 //     * @throws ErrorException
 //     */
 //    public function getOnePhoneInfo (EntityManagerInterface $em, PhoneService $phoneService): Response
