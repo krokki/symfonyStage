@@ -26,6 +26,6 @@ getOneManufacturerPhones:
   methods: GET
 
 goToAnotherSite:
-  path: /v1/getHttpInfo
-  controller: App\Controller\V1\ManufacturerController::goAwaySite
+  path: /v1/getRemoteIp
+  controller: App\Controller\V1\ManufacturerController::getRemoteIp
   methods: GET

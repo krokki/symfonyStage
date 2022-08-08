@@ -2,9 +2,15 @@
 
 namespace App\Controller\V1;
 
+use _PHPStan_9a6ded56a\Nette\Neon\Exception;
 use _PHPStan_9a6ded56a\Nette\Utils\Json;
+use _PHPStan_9a6ded56a\React\Http\Message\ResponseException;
 use App\Entity\Manufacturer;
 use App\Entity\Phone;
+use App\Exceptions\IpifyException\GettingIpException;
+use App\Exceptions\IpifyException\NotFoundIpException;
+use App\Exceptions\ResponseException\ResponseIpifyException;
+use App\Service\HttpClient\HttpClientService;
 use App\Service\Phone\PhoneService;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
@@ -23,7 +29,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use function MongoDB\BSON\toCanonicalExtendedJSON;
 
 
 class ManufacturerController extends AbstractController
@@ -151,13 +159,19 @@ class ManufacturerController extends AbstractController
         return $this->json($arrPhones);
     }
 
-    public function goAwaySite(HttpClientInterface $httpClient): JsonResponse
+    /**
+     * @throws ResponseIpifyException
+     */
+    public function getRemoteIp (HttpClientService $httpClient): JsonResponse
     {
-        $response = $httpClient->request('GET', 'https://api.ipify.org?format=json');
-        $status = $response->getStatusCode();
-        $content = $response->getContent();
-        $result = $response->toArray();
-        return new JsonResponse($result, $status);
+        try {
+            $ip = $httpClient->getIp();
+        }
+        catch (GettingIpException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return new JsonResponse(['ip' => $ip]);
     }
 
     //    /**
