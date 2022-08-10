@@ -65,6 +65,15 @@ class PhoneRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function removeAllPhones()
+    {
+        $qb = $this->createQueryBuilder('p');
+        return $qb
+            ->delete()
+            ->getQuery()
+            ->execute();
+    }
+
 
 //    /**
 //     * @return Phone[] Returns an array of Phone objects

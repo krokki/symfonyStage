@@ -30,11 +30,14 @@ class Phone
      */
     private Manufacturer $manufacturer;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     /**
      * @Groups ({"all_phone_property"})
      */
     private int $ram;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Country = null;
 
     public function getId(): int
     {
@@ -73,6 +76,18 @@ class Phone
     public function setRam(int $ram): self
     {
         $this->ram = $ram;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->Country;
+    }
+
+    public function setCountry(string $Country): self
+    {
+        $this->Country = $Country;
 
         return $this;
     }

@@ -27,9 +27,15 @@ class PhoneService
         $phone->setModel($phoneSpecs['model']);
         $phone->setRam($phoneSpecs['ram']);
         $phone->setManufacturer($manufacturer);
+        $phone->setCountry($manufacturer->getCountry());
         $this->em->persist($phone);
         $this->em->flush();
-
         return $phone;
+    }
+
+    public function dropAllPhones(): void
+    {
+        $repository = $this->em->getRepository(Phone::class);
+        $repository->removeAllPhones();
     }
 }
