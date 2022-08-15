@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -8,6 +7,17 @@
 /var/
 /vendor/
 /.idea/
-~/dev/symfony/.idea/
-/my_db/
+/docker/
+/.github
+/.dockerignore
+/.idea
+/.editorconfig
+
 ###< symfony/framework-bundle ###
+/.gitattributes
+/.env
+/Dockerfile
+/LICENSE
+/README.md
+/docker-compose.override.yml
+/docker-compose.prod.yml
