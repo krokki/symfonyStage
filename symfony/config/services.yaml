@@ -20,7 +20,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Geolocation\Api\IpifyApiClientService:
+    App\Geolocation\Api\IpifyApiClient:
       arguments:
         $apiKey: '%env(API_KEY)%'
 

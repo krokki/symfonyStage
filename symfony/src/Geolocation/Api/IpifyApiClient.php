@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class IpifyApiClientService
+class IpifyApiClient
 {
     public string $apiKey;
     public HttpClientInterface $httpClient;

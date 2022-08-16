@@ -2,7 +2,7 @@
 
 namespace App\Geolocation\Service\GeolocateService;
 
-use App\Geolocation\Api\IpifyApiClientService;
+use App\Geolocation\Api\IpifyApiClient;
 
 
 class ServiceGettingGeoFrom implements GettingGeoFromIpInterface
@@ -10,14 +10,14 @@ class ServiceGettingGeoFrom implements GettingGeoFromIpInterface
     public Geolocator $geolocator;
     public Cacher $cacher;
 
-    public IpifyApiClientService $apiClient;
+    public IpifyApiClient $apiClient;
 
     /**
      * @param Geolocator $geolocator
      * @param Cacher $cacher
- * @param IpifyApiClientService $apiClient
+ * @param IpifyApiClient $apiClient
      */
-    public function __construct(Geolocator $geolocator, Cacher $cacher, IpifyApiClientService $apiClient)
+    public function __construct(Geolocator $geolocator, Cacher $cacher, IpifyApiClient $apiClient)
     {
         $this->geolocator = $geolocator;
         $this->cacher = $cacher;
