@@ -1,6 +1,7 @@
 home:
   path: /home
-  controller: App\Controller\ManufacturerController::index
+  controller: App\Geolocation\Controller\V1\GeolocateController\GeolocateController::getIpGeolocate
+  methods: GET
 
 insert:
   path: /insert
