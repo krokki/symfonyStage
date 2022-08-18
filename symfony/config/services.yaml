@@ -24,5 +24,10 @@ services:
       arguments:
         $apiKey: '%env(API_KEY)%'
 
+    App\Geolocation\Service\GeolocateService:
+      arguments:
+        $geolocator: '@App\Geolocation\Service\Geolocator\Geolocator'
+
+    App\Geolocation\Service\Geolocator\GeolocationInterface: '@App\Geolocation\Service\GeolocateService'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
