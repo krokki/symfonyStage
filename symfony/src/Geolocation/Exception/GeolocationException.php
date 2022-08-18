@@ -6,5 +6,5 @@ use Exception;
 
 class GeolocationException extends Exception
 {
-    public string $ip;
+    protected string $ip;
 }
