@@ -4,10 +4,10 @@ namespace App\Entity;
 
 use App\Repository\GeolocationCacheRepository;
 use DateTime;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Symfony\Component\DependencyInjection;
 
 /**
  * @Entity(repositoryClass="App\Repository\GeolocationCacheRepository")
@@ -15,13 +15,13 @@ use Doctrine\ORM\Mapping\Id;
 class GeolocationCache
 {
     /**
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private int $id;
 
     /**
-     * @Id
      * @ORM\Column(type="string", length=15)
      */
     private string $ip;
@@ -34,7 +34,12 @@ class GeolocationCache
     /**
      * @ORM\Column(type="datetime")
      */
-    private DateTime $created_at;
+    private DateTime $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
 
     /**
      * @return int
@@ -85,17 +90,7 @@ class GeolocationCache
      */
     public function getCreatedAt(): DateTime
     {
-        return $this->created_at;
-    }
-
-    /**
-     * @param DateTime $created_at
-     * @return GeolocationCache
-     */
-    public function setCreatedAt(DateTime $created_at): GeolocationCache
-    {
-        $this->created_at = $created_at;
-        return $this;
+        return $this->createdAt;
     }
 }
 
