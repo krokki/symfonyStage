@@ -42,22 +42,6 @@ class GeolocationCache
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIp(): string
-    {
-        return $this->ip;
-    }
-
-    /**
      * @param string $ip
      * @return GeolocationCache
      */
@@ -83,14 +67,6 @@ class GeolocationCache
     {
         $this->geolocation = $geolocation;
         return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
     }
 }
 

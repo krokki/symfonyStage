@@ -1,32 +1,4 @@
 home:
-  path: /v1/getGeo
+  path: /
   controller: App\Geolocation\Controller\GeolocationController::getIpGeolocate
-  methods: GET
-
-insert:
-  path: /insert
-  controller: App\Controller\ManufacturerController::createPhoneManufacturer
-
-addPhone:
-  path: /v1/manufacturers/{id}/phones
-  controller: App\Controller\V1\ManufacturerController::addOnePhone
-  methods: POST
-
-practiceAlg:
-  path: /practiceAlg
-  controller: App\Controller\V1\ManufacturerController::practiceAlg
-
-getManufacturers:
-  path: /v1/manufacturers
-  controller: App\Controller\V1\ManufacturerController::getManufacturers
-  methods: GET
-
-getOneManufacturerPhones:
-  path: /v1/manufacturers/{id}/phones
-  controller: App\Controller\V1\ManufacturerController::getOneManufacturerPhones
-  methods: GET
-
-goToAnotherSite:
-  path: /v1/getRemoteIp
-  controller: App\Controller\V1\ManufacturerController::getRemoteIp
   methods: GET

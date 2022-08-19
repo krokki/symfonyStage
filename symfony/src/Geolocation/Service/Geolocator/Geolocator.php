@@ -28,26 +28,28 @@ class Geolocator implements GeolocationInterface
      */
     public function getGeolocation(string $ip): array
     {
-            $ipIsValid = $this->validateIp($ip);
-            if(!$ipIsValid) {
-                throw new IpValidationException($ip);
-            }
+        $this->validateIp($ip);
 
-            try {
-               $geolocation_cache = $this->apiClient->request(Request::METHOD_GET, '/api/v2/country,city', ['query' => ['ipAddress' => $ip]]);
+        try {
+           $geolocation_cache = $this->apiClient->request(Request::METHOD_GET, '/api/v2/country,city', ['query' => ['ipAddress' => $ip]]);
 
-               return $geolocation_cache['location'];
-            } catch (ExceptionInterface $e) {
-                throw new GetGeolocationException($ip, $e);
+           return $geolocation_cache['location'];
+        } catch (ExceptionInterface $e) {
+            throw new GetGeolocationException($ip, $e);
         }
     }
 
     /**
      * @param string $ip
-     * @return string
+     * @return void
+     * @throws IpValidationException
      */
-    public function validateIp(string $ip): string
+    public function validateIp(string $ip): void
     {
-        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+        $ipIsValid = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+
+        if(!$ipIsValid) {
+            throw new IpValidationException($ip);
+        }
     }
 }

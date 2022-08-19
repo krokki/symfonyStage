@@ -38,15 +38,16 @@ class GeolocateService implements GeolocationInterface
     }
 
     /**
-     * @throws IpValidationException
-     * @throws GetGeolocationException
+     * @inheritDoc
      */
     public function getGeolocation(string $ip): array
     {
         $geoData = $this->cacher->getFromCache($ip);
+
         if(!$geoData) {
             $geoData = $this->getNewGeolocate($ip);
         }
+
        return $geoData;
     }
 }

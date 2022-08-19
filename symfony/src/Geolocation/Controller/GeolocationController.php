@@ -10,9 +10,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class GeolocationController extends AbstractController
 {
+    /**
+     * @param Request $request
+     * @param GeolocationInterface $geolocateService
+     * @return JsonResponse
+     */
     public function getIpGeolocate(Request $request, GeolocationInterface $geolocateService): JsonResponse
     {
         $ip = $request->getClientIp();

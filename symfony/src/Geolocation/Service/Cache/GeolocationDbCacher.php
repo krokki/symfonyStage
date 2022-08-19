@@ -39,6 +39,7 @@ class GeolocationDbCacher implements CacheGeoInterface
         if(!$cache) {
             return null;
         }
+
         return $cache->getGeolocation();
     }
 }
