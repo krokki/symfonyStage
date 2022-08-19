@@ -1,5 +1,5 @@
 home:
-  path: /home
+  path: /v1/getGeo
   controller: App\Geolocation\Controller\GeolocationController::getIpGeolocate
   methods: GET
 
